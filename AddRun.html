@@ -1,0 +1,84 @@
+<!-- Use a templated HTML printing scriptlet to import common stylesheet. -->
+<?!= HtmlService.createHtmlOutputFromFile('Stylesheet').getContent(); ?>
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/pure/0.6.0/pure-min.css">
+
+
+<div class="sidebar branding-below">
+  <div class="pure-g">
+    <form class="pure-form pure-form-aligned" id="resource-expenditure-form">
+    <input id="docked-girls-input" name="docked-girls" class="hidden" />
+
+      <div class="pure-u-1-1">
+        <span class="cat-label">Base Expenditure</span>
+      </div>
+
+      <hr>
+      <div class="pure-u-1-1 sidebar-cat">
+        <fieldset>
+          <div class="pure-control-group ">
+            <label for="fuel">Fuel</label>
+            <input name="fuel" class="pure-u-1-4" type="text" placeholder="0">
+          </div>
+          <div class="pure-control-group ">
+            <label for="ammo">Ammo</label>
+            <input name="ammo" class="pure-u-1-4" type="text" placeholder="0">
+          </div>
+          
+          <div class="pure-control-group ">
+            <label for="bauxite">Bauxite</label>
+            <input name="bauxite" class="pure-u-1-4" type="text" placeholder="0">
+          </div>
+
+
+
+
+
+
+        </fieldset>
+      </div>
+
+
+
+      <div class="pure-u-1-1">
+        <span class="cat-label">Dock Girls</span>
+      </div>
+      <hr>
+      <div id="docked-girls-container" class="sidebar-cat pure-u-1-1">
+        <div id="docked-girls-empty">You have not docked any girls yet</div>
+        <div id="docked-girls-area"></div>
+        <div class="pure-controls ">
+          <button id="new-docked-ship">Docking</button>
+        </div>
+      </div>
+
+
+      <div class="pure-u-1-1">
+        <span class="cat-label">Result</span>
+      </div>
+      <hr>
+      <div id="result-container" class="pure-u-1-1 sidebar-cat">
+        <input name="result" placeholder="" type="text" class="full-width-input">
+      </div>
+
+      <div class="pure-u-1-1">
+        <span class="cat-label">Comments</span>
+      </div>
+      <hr>
+      <div id="comments-container" class="pure-u-1-1 sidebar-cat">
+        <textarea name="comments"  class="full-width-input" placeholder="Provide additional info for this run (ie. Changed composition, formation, equipment setups)"></textarea>
+      </div>
+
+      <div class="pure-controls  ">
+        <button type="submit" class="" id="submitButton">Submit</button>
+      </div>
+
+      <hr>
+
+
+
+    </form>
+  </div>
+</div>
+
+<!-- Use a templated HTML printing scriptlet to import JavaScript. -->
+<?!= HtmlService.createHtmlOutputFromFile('AddRunJS').getContent(); ?>
