@@ -6,11 +6,12 @@ var DIALOG_TITLE = 'Example Dialog';
 var SIDEBAR_TITLE = 'Example Sidebar';
 var NEW_SORTIE_TITLE = 'New Sortie';
 
-var CONTEXT_ROW_COUNT = 1;
+var CONTEXT_ROW_COUNT = 9;
 var MAX_ROW_CONSTANT = 999;
 
 var COLUMN_CONTEXT = [
-  "ATTEMPT_COL",
+  "YEAR_COL",
+  "MONTH_COL",
   "FUEL_COL",
   "AMMO_COL",
   "STEEL_COL",
@@ -123,7 +124,7 @@ function getColumnContext(contextKeyword){
 }
 
 function getValueAt(m, n){
-  var values = SpreadsheetApp.getActiveSpreadsheet().getSheetValues(m, n, 1, 8);
+  var values = SpreadsheetApp.getActiveSpreadsheet().getSheetValues(m, n, 1, CONTEXT_ROW_COUNT);
   Logger.log(JSON.stringify(values));
 }
 
@@ -175,12 +176,13 @@ function processForm(formObject){
   }
   
 
-    
+  var now = new Date();
   
   var activeSheet = SpreadsheetApp.getActiveSheet();
-  var range = activeSheet.getRange(rowToAdd,1,1,8);
-  range.getCell(1, getColumnContext("ATTEMPT_COL")).setValue(new Date().toLocaleDateString("en-US"));
-  range.getCell(1, getColumnContext("FUEL_COL")).setValue(createPrecalculatedNotation(completedValueSet["fuel"]))
+  var range = activeSheet.getRange(rowToAdd,1,1,CONTEXT_ROW_COUNT);
+  range.getCell(1, getColumnContext("YEAR_COL")).setValue(now.getYear());
+  range.getCell(1, getColumnContext("MONTH_COL")).setValue(now.getMonth()+1);
+  range.getCell(1, getColumnContext("FUEL_COL")).setValue(createPrecalculatedNotation(completedValueSet["fuel"]));
   range.getCell(1, getColumnContext("AMMO_COL")).setValue(createPrecalculatedNotation(completedValueSet["ammo"]));
   range.getCell(1, getColumnContext("STEEL_COL")).setValue(createPrecalculatedNotation(completedValueSet["steel"]));
   range.getCell(1, getColumnContext("BAUXITE_COL")).setValue(createPrecalculatedNotation(completedValueSet["bauxite"]));
