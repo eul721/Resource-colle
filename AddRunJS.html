@@ -1,0 +1,91 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script>
+
+
+//initialization
+var newDockedShipButton = null;
+var dockedGirlsArea = null;
+var newResourceExpenditureForm = null;
+var submitButton = null;
+
+var shipDockCounter = 0;
+var dockedGirlArray = [];
+
+function DockedGirl(fuel,steel,bucket){
+    this.fuel = fuel;
+    this.steel = steel;
+    this.bucket = bucket;
+}
+
+$(function(){
+  dockedGirlsArea = $('#docked-girls-area');
+  newDockedShipButton = $('#new-docked-ship');
+  submitButton = $('#submitButton');
+  newResourceExpenditureForm = $('#resource-expenditure-form');
+
+  newDockedShipButton.click(addGirlToDock);
+  submitButton.click(submitToGAS);
+});
+
+function capitalize(word){
+   return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
+function makeLabel(keyword){
+   return $("<label>").attr("for", keyword).text(capitalize(keyword));
+}
+
+function makeInput(keyword){
+   return $("<input>").addClass(keyword).attr("type","text").attr("placeholder","0").addClass("pure-u-1-4");
+}
+
+function addGirlToDock(){
+
+    shipDockCounter++;
+    if($("#docked-girls-empty").is(":visible")){
+        $("#docked-girls-empty").hide();
+    }
+    var fieldset = $('<fieldset />').addClass("docked-girl");
+    var resourceArr = ["steel","fuel","bucket"];
+    fieldset.append($('<span />').text('Girl ' + shipDockCounter).addClass("docked-girls-label"));
+    
+    
+    for (var i=0; i<resourceArr.length;i++){
+      var container = $("<div />").addClass("pure-control-group");
+      makeLabel(resourceArr[i]).appendTo(container);
+      makeInput(resourceArr[i]).appendTo(container);
+      fieldset.append(container);
+
+    }
+    dockedGirlsArea.append(fieldset);
+}
+
+
+
+function submitToGAS(){
+
+var fuel;
+var steel;
+var bucket;
+
+   $(".docked-girl").each(function(){
+       //add case to reject empty inputs and abort
+       fuel = $(this).find(".fuel").val();
+       steel = $(this).find(".steel").val();
+       bucket = $(this).find(".bucket").val();
+       dockedGirlArray.push(new DockedGirl(fuel,steel,bucket));
+   });
+   $("#docked-girls-input").val(JSON.stringify(dockedGirlArray));
+
+   var result = google.script.run
+            .withSuccessHandler(function(){
+                $("input").val("");
+                $(".docked-girl").remove();
+                dockedGirlArray = []; //reset the docked girl array variable for next entry
+            })
+            .processForm(newResourceExpenditureForm[0]);
+            
+   
+   
+}
+</script>
